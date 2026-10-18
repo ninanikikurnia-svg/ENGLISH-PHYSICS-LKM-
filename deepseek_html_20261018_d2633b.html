@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKM - Conservation of Mechanical Energy</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --border-color: #dcdcdc;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-info {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background-color: #e8f4f8;
+            padding: 10px 15px;
+            border-left: 5px solid var(--secondary-color);
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            min-width: 150px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .inline-input {
+            width: 80px;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid #999;
+            background: transparent;
+            font-weight: bold;
+            color: var(--secondary-color);
+            border-radius: 0;
+        }
+
+        .inline-input:focus {
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .full-width-input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        .table-input {
+            width: 90%;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .calculation-block {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        @media (max-width: 600px) {
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .form-group label {
+                min-width: auto;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>LKM (Lembar Kerja Murid)</h1>
+    <div class="header-info">
+        <strong>Subject:</strong> Physics | <strong>Topic:</strong> Conservation of Mechanical Energy (Miniature Roller Coaster)<br>
+        <strong>Phase/Grade:</strong> E / X | <strong>Time Allocation:</strong> 15 Minutes Practical Session
+    </div>
+
+    <form id="lkmForm" onsubmit="event.preventDefault(); alert('LKM Submitted Successfully! Data saved for evaluation.');">
+        
+        <!-- SECTION A: IDENTITY -->
+        <div class="section-title">A. GROUP IDENTITY & ROLES</div>
+        <div class="form-group">
+            <label>Group Name:</label>
+            <input type="text" placeholder="Enter your group name" required>
+        </div>
+        <div class="roles-grid">
+            <div class="form-group">
+                <label>Group Leader:</label>
+                <input type="text" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <label>Measurer & Releaser:</label>
+                <input type="text" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <label>Data Recorder:</label>
+                <input type="text" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <label>Presenter / Reporter:</label>
+                <input type="text" placeholder="Name" required>
+            </div>
+        </div>
+
+        <!-- SECTION B: OBJECTIVE -->
+        <div class="section-title">B. EXPERIMENTAL OBJECTIVE</div>
+        <p>Students are able to prove that the total Mechanical Energy of a marble rolling down a curved track remains constant, and apply the conservation of energy principle to determine the marble's velocity.</p>
+
+        <!-- SECTION C: TOOLS -->
+        <div class="section-title">C. TOOLS AND MATERIALS</div>
+        <p><em>Please check the box to confirm that your group has received all necessary equipment.</em></p>
+        <div class="checkbox-group">
+            <label><input type="checkbox" required> 1 marble (mass m = 0.02 kg)</label>
+            <label><input type="checkbox" required> 1 split hose / thick cardboard (as a curved track)</label>
+            <label><input type="checkbox" required> 1-meter ruler / measuring tape</label>
+            <label><input type="checkbox" required> Transparent adhesive tape</label>
+            <label><input type="checkbox" required> Physics Formula Card (Scaffolding aid)</label>
+        </div>
+
+        <!-- SECTION D: PROCEDURE -->
+        <div class="section-title">D. PROCEDURE & EXPERIMENTAL SCENARIO</div>
+        <ol>
+            <li>Attach one end of the curved track to the table/wall to create a descending slope.</li>
+            <li>Measure the heights of the following points from the table surface (use <strong>g = 10 m/s&sup2;</strong>):
+                <ul>
+                    <li><strong>Point A (Peak):</strong> Height h<sub>A</sub> = 0.8 meters (80 cm).</li>
+                    <li><strong>Point B (Midpoint):</strong> Height h<sub>B</sub> = 0.3 meters (30 cm).</li>
+                    <li><strong>Point C (Base):</strong> Height h<sub>C</sub> = 0 meters.</li>
+                </ul>
+            </li>
+            <li>Hold the marble at <strong>Point A</strong> (at rest, v<sub>A</sub> = 0 m/s), and release it so it rolls down through Point B and Point C.</li>
+        </ol>
+
+        <!-- SECTION E: DATA COLLECTION -->
+        <div class="section-title">E. DATA COLLECTION AND ANALYSIS</div>
+        <h3>Part 1. Calculate Potential Energy, Kinetic Energy, and Mechanical Energy</h3>
+        <p><em>Use m = 0.02 kg, g = 10 m/s&sup2;, EP = mgh, EK = &frac12;mv&sup2;, EM = EP + EK</em></p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Point</th>
+                    <th>Height h (m)</th>
+                    <th>Velocity v (m/s)</th>
+                    <th>EP = mgh (Joule)</th>
+                    <th>EK = &frac12;mv&sup2; (Joule)</th>
+                    <th>EM = EP + EK (Joule)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>A (Peak)</strong></td>
+                    <td>0.8</td>
+                    <td>0</td>
+                    <td>0.02 &times; 10 &times; 0.8 = 0.16</td>
+                    <td>&frac12; &times; 0.02 &times; 0&sup2; = 0</td>
+                    <td>0.16 + 0 = 0.16</td>
+                </tr>
+                <tr>
+                    <td><strong>B (Mid)</strong></td>
+                    <td>0.3</td>
+                    <td><em>(Calculate in Part 2)</em></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                </tr>
+                <tr>
+                    <td><strong>C (Base)</strong></td>
+                    <td>0</td>
+                    <td><em>(Calculate in Part 2)</em></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                    <td><input type="text" class="table-input" placeholder="..." required></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Part 2. Predicting the Velocity of the Marble at Point B and C</h3>
+        <p><em>According to the Law of Conservation of Mechanical Energy, the value of EM at Point B and C is equal to the EM at Point A (0.16 Joule).</em></p>
+
+        <div class="calculation-block">
+            <strong>1. At Point B (h<sub>B</sub> = 0.3 m):</strong><br><br>
+            EP<sub>B</sub> = 0.02 &times; 10 &times; 0.3 = <input type="text" class="inline-input" placeholder="..." required> Joule<br>
+            EK<sub>B</sub> = EM<sub>A</sub> &minus; EP<sub>B</sub> = 0.16 &minus; <input type="text" class="inline-input" placeholder="..." required> = <input type="text" class="inline-input" placeholder="..." required> Joule<br><br>
+            Using EK<sub>B</sub> = &frac12; &times; m &times; v<sub>B</sub>&sup2; to find v<sub>B</sub>:<br>
+            v<sub>B</sub> = &radic;(2 &times; EK<sub>B</sub> / m) = <input type="text" class="inline-input" placeholder="..." required> m/s
+        </div>
+
+        <div class="calculation-block">
+            <strong>2. At Point C (h<sub>C</sub> = 0 m):</strong><br><br>
+            EP<sub>C</sub> = 0.02 &times; 10 &times; 0 = <input type="text" class="inline-input" placeholder="..." required> Joule<br>
+            EK<sub>C</sub> = EM<sub>A</sub> &minus; EP<sub>C</sub> = 0.16 &minus; <input type="text" class="inline-input" placeholder="..." required> = <input type="text" class="inline-input" placeholder="..." required> Joule<br><br>
+            Calculate the velocity v<sub>C</sub> at the base of the track:<br>
+            v<sub>C</sub> = &radic;(2 &times; EK<sub>C</sub> / m) = <input type="text" class="inline-input" placeholder="..." required> m/s
+        </div>
+
+        <!-- SECTION F: ANALYSIS -->
+        <div class="section-title">F. ANALYSIS QUESTIONS</div>
+        <p><em>Please type your answers in the designated text boxes using academic English.</em></p>
+
+        <div class="form-group" style="flex-direction: column; align-items: flex-start;">
+            <label style="margin-bottom: 10px;">1. Compare the Mechanical Energy (EM) values of the marble at Points A, B, and C. What is your group's conclusion?</label>
+            <textarea rows="3" placeholder="Type your conclusion here..." required></textarea>
+        </div>
+
+        <div class="form-group" style="flex-direction: column; align-items: flex-start;">
+            <label style="margin-bottom: 10px;">2. As the marble rolls down from Point A to Point C, what happens to the values of its Potential Energy (EP) and Kinetic Energy (EK)?</label>
+            <textarea rows="3" placeholder="Explain the energy conversion here..." required></textarea>
+        </div>
+
+        <div class="form-group" style="flex-direction: column; align-items: flex-start;">
+            <label style="margin-bottom: 10px;">3. Based on this experiment, explain why a real roller coaster can glide without an engine from the peak to the base.</label>
+            <textarea rows="3" placeholder="Relate the concept to the real-world application..." required></textarea>
+        </div>
+
+        <!-- SECTION G: CHALLENGE -->
+        <div class="section-title">G. CHALLENGE PROBLEM (Optional)</div>
+        <p>If the initial height of the track's peak is lowered to <strong>h<sub>A</sub> = 0.45 meters</strong>, determine the velocity of the marble when it reaches the base of the table (h = 0 m)!</p>
+        
+        <div class="calculation-block" style="border-left-color: #e74c3c;">
+            <strong>Calculation Steps:</strong><br><br>
+            EP<sub>A</sub> = <input type="text" class="inline-input" placeholder="..." > Joule<br>
+            EK<sub>C</sub> = EP<sub>A</sub> &rarr; v<sub>C</sub> = &radic;(2gh) = <input type="text" class="inline-input" placeholder="..." > m/s<br><br>
+            <strong>Final Answer:</strong> v<sub>C</sub> = <input type="text" class="inline-input" placeholder="..." > m/s
+        </div>
+
+        <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
+
+        <label style="display: flex; align-items: center; gap: 10px; font-weight: bold; cursor: pointer;">
+            <input type="checkbox" required> 
+            I confirm that all data recorded is accurate and based on our group's actual experimental results.
+        </label>
+
+        <button type="submit" class="submit-btn">SUBMIT LKM TO TEACHER</button>
+    </form>
+</div>
+
+</body>
+</html>
